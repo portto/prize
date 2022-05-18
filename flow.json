@@ -1,0 +1,40 @@
+{
+	"emulators": {
+		"default": {
+			"port": 3569,
+			"serviceAccount": "emulator-account"
+		}
+	},
+	"contracts": {
+		"BloctoPrize": "./contracts/BloctoPrize.cdc",
+		"BloctoToken": "./contracts/BloctoToken.cdc"
+	},
+	"networks": {
+		"emulator": "127.0.0.1:3569",
+		"mainnet": "access.mainnet.nodes.onflow.org:9000",
+		"testnet": "access.devnet.nodes.onflow.org:9000"
+	},
+	"accounts": {
+		"emulator-account": {
+			"address": "f8d6e0586b0a20c7",
+			"key": "d815a1de3ad6b9d3cdaf5e6b30517468e0a8f3aadb7664743909cc04cdbe3cc2"
+		},
+		"testnet-account": {
+			"address": "b096b7a81df21336",
+			"key": "7ba03d94bafdbec83f2efc65185e159e313c0099a4ed6230edce58000a3acd71"
+		}
+	},
+	"deployments": {
+		"emulator": {
+			"emulator-account": [
+				"BloctoPrize",
+				"BloctoToken"
+			]
+		},
+		"testnet": {
+			"testnet-account": [
+				"BloctoPrize"
+			]
+		}
+	}
+}
