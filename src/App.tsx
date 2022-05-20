@@ -1,6 +1,10 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { Box } from "@chakra-ui/react";
+import IndexPage from "./pages/IndexPage";
+import CampaignPage from "./pages/CampaignPage";
+import Header from "./components/Header";
+import Footer from "./components/Footer";
+import withContext from "./context";
 
 function App() {
   return (
@@ -23,4 +27,4 @@ function App() {
   );
 }
 
-export default App;
+export default withContext(App);
