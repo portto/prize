@@ -229,6 +229,7 @@ pub contract BloctoPrize {
 
     pub fun claimPrizes(address: Address) {
       pre {
+        self.cancelled == false: "Campaign cancelled."
         self.startAt! <= getCurrentBlock().timestamp: "Not started."
         self.endAt == nil || self.endAt! >= getCurrentBlock().timestamp: "Expired."
         self.claimed[address] == nil: "Already claimed."
