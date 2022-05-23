@@ -1,6 +1,8 @@
 import { Flex, Box, Text, Img } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 import dayjs from "dayjs";
+import { useEffect, useState } from "react";
+import * as fcl from "@onflow/fcl";
 import Header from "../components/Header";
 import IconLink from "../components/IconLink";
 import CampaignCard from "../components/CampaignCard";
@@ -9,16 +11,25 @@ import PrizesLabel from "../components/PrizesLabel";
 import Countdown from "../components/Countdown";
 import ScrollToTopButton from "../components/ScrollToTopButton";
 import bloctoLogo from "../assets/blocto.png";
-
-import campaigns from "../fakeData";
 import Visual from "../components/Visual";
+import { Campaign } from "../types";
+import getCampaignsScript from "../scripts/getCampaigns";
 
 const IndexPage = () => {
+  const [campaigns, setCampaigns] = useState<Campaign[]>([]);
   const trendingCampaigns = campaigns.filter(
     (campaign) =>
       campaign.startAt * 1000 <= Date.now() &&
       Date.now() <= campaign.endAt * 1000
   );
+
+  useEffect(() => {
+    fcl
+      .send([fcl.script(getCampaignsScript)])
+      .then(fcl.decode)
+      .then((data: any) => setCampaigns(data));
+  }, []);
+
   return (
     <Box>
       <Flex
@@ -97,10 +108,12 @@ const IndexPage = () => {
                       height={45}
                       p={1}
                     >
-                      <Img src={bloctoLogo} />
+                      <Img
+                        src={trendingCampaigns[0].holderLogo || bloctoLogo}
+                      />
                     </Box>
                     <Text fontSize="xl" ml={4} color="#7f7f7f">
-                      Blocto
+                      {trendingCampaigns[0].holder || "Blocto"}
                     </Text>
                   </Flex>
                   <Text

@@ -6,57 +6,153 @@ import {
   ListItem,
   Text,
   UnorderedList,
+  useToast,
 } from "@chakra-ui/react";
 import { Navigate, useParams } from "react-router";
-import { useContext, useEffect } from "react";
-import CampaignCard from "../components/CampaignCard";
-import ScrollableContainer from "../components/ScrollableContainer";
-import bloctoLogo from "../assets/blocto.png";
-import campaigns from "../fakeData";
-import Countdown from "../components/Countdown";
+import { useCallback, useContext, useEffect, useState } from "react";
 import dayjs from "dayjs";
 import timezone from "dayjs/plugin/timezone";
 import utc from "dayjs/plugin/utc";
+import * as fcl from "@onflow/fcl";
+import * as types from "@onflow/types";
+import CampaignCard from "../components/CampaignCard";
+import Countdown from "../components/Countdown";
+import ScrollableContainer from "../components/ScrollableContainer";
 import Prize from "../components/icons/Prize";
 import Trending from "../components/icons/Trending";
 import ScrollToTopButton from "../components/ScrollToTopButton";
 import AuthContext from "../context/auth";
+import { Campaign, Token } from "../types";
+import bloctoLogo from "../assets/blocto.png";
+import getCampaignsScript from "../scripts/getCampaigns";
+import getCampaignScript from "../scripts/getCampaign";
+import claimPrizesScriptBuilder from "../scripts/builder/claimPrizes";
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
 
+const FETCHING_STATUS = {
+  IDLE: 0,
+  FETCHING: 1,
+  DONE: 2,
+  ERROR: 3,
+};
+
+const CLAIMING_STATUS = {
+  IDLE: 0,
+  CLAIMING: 1,
+  DONE: 2,
+  ERROR: 3,
+};
+
 const CampaignPage = () => {
-  const { id = -1 } = useParams();
+  const params = useParams();
+  const id = +(params.id as any);
   const { user } = useContext(AuthContext);
-  const campaign = campaigns.find((c) => c.id === ~~id);
+  const [fetchingStatus, setFetchingStatus] = useState(FETCHING_STATUS.IDLE);
+  const [claimingStatus, setClaimingStatus] = useState(CLAIMING_STATUS.IDLE);
+  const [campaigns, setCampaigns] = useState<Campaign[]>([]);
+  const [campaign, setCampaign] = useState<Campaign | undefined>();
+  const toast = useToast();
+
   useEffect(() => {
     window.scrollTo({ top: 0 });
   }, [id]);
 
-  if (!campaign) {
+  useEffect(() => {
+    setFetchingStatus(FETCHING_STATUS.FETCHING);
+    Promise.all([
+      fcl.send([fcl.script(getCampaignsScript)]).then(fcl.decode),
+      fcl
+        .send([
+          fcl.script(getCampaignScript),
+          fcl.args([fcl.arg(+id, types.Int)]),
+        ])
+        .then(fcl.decode),
+    ]).then(([items, item]) => {
+      setCampaigns(items);
+      setCampaign(item);
+      setFetchingStatus(FETCHING_STATUS.DONE);
+    });
+  }, [id]);
+
+  const claimPrizes = useCallback(
+    (token: Token) => async () => {
+      setClaimingStatus(CLAIMING_STATUS.CLAIMING);
+      try {
+        const block = await fcl.send([fcl.getBlock(true)]).then(fcl.decode);
+        await fcl
+          .send([
+            fcl.transaction(claimPrizesScriptBuilder(token)),
+            fcl.args([fcl.arg(id, types.Int)]),
+            fcl.proposer(fcl.currentUser().authorization),
+            fcl.authorizations([fcl.currentUser().authorization]),
+            fcl.payer(fcl.currentUser().authorization),
+            fcl.ref(block.id),
+            fcl.limit(9999),
+          ])
+          .then(({ transactionId }: { transactionId: string }) =>
+            fcl.tx(transactionId).onceSealed()
+          )
+          .then(() => {
+            toast({
+              title: "Claim successfully!",
+              status: "success",
+              isClosable: true,
+              duration: 1000,
+            });
+            setClaimingStatus(CLAIMING_STATUS.DONE);
+          });
+      } catch (e: any) {
+        console.log(e);
+        toast({
+          title: `Error: ${e.message}`,
+          status: "error",
+          isClosable: true,
+          duration: 1000,
+        });
+        setClaimingStatus(CLAIMING_STATUS.ERROR);
+      }
+    },
+    [id, toast]
+  );
+
+  if (!campaign) return null;
+  if (fetchingStatus === FETCHING_STATUS.DONE && !campaign)
     return <Navigate to="/" />;
-  }
 
-  const isTrending = Date.now() <= campaign.endAt * 1000;
-  const startTime = dayjs(campaign.startAt * 1000);
-  const endTime = dayjs(campaign.endAt * 1000);
+  const isTrending = !!campaign && Date.now() <= campaign.endAt * 1000;
+  const startTime = campaign ? dayjs(campaign.startAt * 1000) : null;
+  const endTime = campaign ? dayjs(campaign.endAt * 1000) : null;
 
-  const claimablePrizes = user?.addr ? campaign.prizes : [];
-  const claimablePrizeToken = claimablePrizes[0]?.tokenName;
+  const address = user?.addr;
+
+  const claimablePrizes =
+    (address &&
+      campaign?.winners[address]?.map(
+        (prizeIndex) => campaign.prizes[prizeIndex]
+      )) ||
+    [];
+  const claimablePrizeToken = claimablePrizes?.[0]?.token;
+  const claimable =
+    !!claimablePrizes.length &&
+    startTime?.isBefore(dayjs()) &&
+    endTime?.isAfter(dayjs());
+  const claimed = campaign.claimed[address];
   const totalClaimableAmount = claimablePrizes?.reduce(
-    (acc, cur) => acc + cur.amount,
+    (acc: number, cur: any) => acc + +cur.amount,
     0
   );
 
-  const claimText = claimablePrizes.length
-    ? `You can claim a total of ${totalClaimableAmount} ${claimablePrizeToken}`
+  const claimText = claimablePrizes?.length
+    ? `You can claim a total of ${totalClaimableAmount} ${claimablePrizeToken.name}`
     : "You are NOT eligible";
 
   return (
-    <Box px={{ base: 0, lg: 102 }} py={{ base: 23, lg: 66 }}>
+    <Box px={{ base: 0, lg: 30, xl: "102px" }} py={{ base: 23, lg: 66 }}>
       <Flex
         gap={10}
-        px={{ base: 4, lg: 60 }}
+        px={{ base: 4, lg: 20, xl: "60px" }}
         direction={{ base: "column", lg: "row" }}
       >
         <Box flex={1} pr={{ base: 0, lg: 3 }}>
@@ -69,48 +165,41 @@ const CampaignPage = () => {
           {isTrending && (
             <>
               <Flex direction="column">
-                {claimablePrizes.length ? (
-                  <>
-                    <Box bg="primary.100" borderRadius="12px" p={25} mb={7}>
-                      <Text fontWeight="bold">
-                        Congratulation on winning the awards at this event:
-                      </Text>
-                      <UnorderedList>
-                        {claimablePrizes.map((prize, index) => (
-                          <ListItem key={index} my={2}>
-                            {prize.name}
-                          </ListItem>
-                        ))}
-                      </UnorderedList>
-                    </Box>
-                    <Button
-                      bg="primary.700"
-                      borderRadius={100}
-                      color="white"
-                      _hover={{ opacity: 0.8 }}
-                      _active={{ opacity: 0.9 }}
-                      mx="20%"
-                      mb={5}
-                    >
-                      Claim
-                    </Button>
-                  </>
-                ) : (
-                  <Box
-                    as="button"
-                    bg="#7f7f7f"
-                    py={2}
-                    borderRadius={100}
-                    color="white"
-                    mx="20%"
-                    mb={5}
-                    disabled
-                    fontWeight="bold"
-                    cursor="not-allowed"
-                  >
-                    Claim
+                {claimable && (
+                  <Box bg="primary.100" borderRadius="12px" p={25} mb={7}>
+                    <Text fontWeight="bold">
+                      Congratulation on winning the awards at this event:
+                    </Text>
+                    <UnorderedList>
+                      {claimablePrizes.map((prize: any, index: number) => (
+                        <ListItem key={index} my={2}>
+                          {prize.name}
+                        </ListItem>
+                      ))}
+                    </UnorderedList>
                   </Box>
                 )}
+                <Button
+                  isLoading={claimingStatus === CLAIMING_STATUS.CLAIMING}
+                  bg={claimable && !claimed ? "primary.700" : "#7f7f7f"}
+                  borderRadius={100}
+                  color="white"
+                  _hover={{ opacity: 0.8 }}
+                  _active={{ opacity: 0.9 }}
+                  disabled={!claimable || claimed}
+                  _disabled={{
+                    opacity: 1,
+                  }}
+                  cursor={claimable && !claimed ? "pointer" : "not-allowed"}
+                  mx="20%"
+                  mb={5}
+                  onClick={claimPrizes(claimablePrizeToken)}
+                >
+                  {(claimable && claimed) ||
+                  claimingStatus === CLAIMING_STATUS.DONE
+                    ? "Received"
+                    : "Claim"}
+                </Button>
               </Flex>
               <Text align="center" color="#7f7f7f">
                 {claimText}
@@ -127,10 +216,10 @@ const CampaignPage = () => {
               height={30}
               p={1}
             >
-              <Img src={bloctoLogo} />
+              <Img src={campaign.holderLogo || bloctoLogo} />
             </Box>
             <Text fontSize="xl" ml={4} color="#7f7f7f">
-              Blocto
+              {campaign.holder || "Blocto"}
             </Text>
           </Flex>
           <Text

@@ -5,18 +5,9 @@ import Countdown from "./Countdown";
 import PrizesLabel from "./PrizesLabel";
 import Calendar from "./icons/Calendar";
 import bloctoLogo from "../assets/blocto.png";
+import { Campaign } from "../types";
 
-interface CampaignCardProps {
-  id: number;
-  title: string;
-  bannerUrl: string;
-  prizes: Array<{
-    name: string;
-    tokenName: string;
-    amount: number;
-  }>;
-  startAt: number;
-  endAt: number;
+interface CampaignCardProps extends Campaign {
   variant?: "regular" | "upcoming" | "ended";
 }
 
@@ -35,6 +26,8 @@ const CampaignCard = ({
   id,
   title,
   bannerUrl,
+  holder,
+  holderLogo,
   prizes,
   variant = "regular",
   startAt,
@@ -60,10 +53,10 @@ const CampaignCard = ({
                 height={25}
                 p={1}
               >
-                <Img src={bloctoLogo} />
+                <Img src={holderLogo || bloctoLogo} />
               </Box>
               <Text ml={3} color="#7f7f7f">
-                Blocto
+                {holder || "Blocto"}
               </Text>
             </Flex>
             <Text fontWeight="bold" my={4} whiteSpace="normal" height="6ex">
