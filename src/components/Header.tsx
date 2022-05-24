@@ -18,6 +18,7 @@ const Header = () => (
       left={0}
       right={0}
       bg="white"
+      zIndex={10}
     >
       <Link to="/">
         <Flex align="center">
