@@ -48,7 +48,7 @@ const CLAIMING_STATUS = {
 const CampaignPage = () => {
   const params = useParams();
   const id = +(params.id as any);
-  const { user } = useContext(AuthContext);
+  const { user, login } = useContext(AuthContext);
   const [fetchingStatus, setFetchingStatus] = useState(FETCHING_STATUS.IDLE);
   const [claimingStatus, setClaimingStatus] = useState(CLAIMING_STATUS.IDLE);
   const [campaigns, setCampaigns] = useState<Campaign[]>([]);
@@ -144,9 +144,21 @@ const CampaignPage = () => {
     0
   );
 
-  const claimText = claimablePrizes?.length
+  const claimHint = claimablePrizes?.length
     ? `You can claim a total of ${totalClaimableAmount} ${claimablePrizeToken.name}`
     : "You are NOT eligible";
+  const claimButtonDisabled =
+    address &&
+    (!claimable ||
+      (claimable && claimed) ||
+      claimingStatus === CLAIMING_STATUS.DONE);
+  const getClaimButtonContent = () => {
+    if (!address) return "Connect Wallet";
+    if ((claimable && claimed) || claimingStatus === CLAIMING_STATUS.DONE) {
+      return "Received";
+    }
+    return "Claim";
+  };
 
   return (
     <Box px={{ base: 0, lg: 30, xl: "102px" }} py={{ base: 23, lg: 66 }}>
@@ -181,29 +193,26 @@ const CampaignPage = () => {
                 )}
                 <Button
                   isLoading={claimingStatus === CLAIMING_STATUS.CLAIMING}
-                  bg={claimable && !claimed ? "primary.700" : "#7f7f7f"}
+                  bg={claimButtonDisabled ? "#7f7f7f" : "primary.700"}
                   borderRadius={100}
                   color="white"
                   _hover={{ opacity: 0.8 }}
                   _active={{ opacity: 0.9 }}
-                  disabled={!claimable || claimed}
-                  _disabled={{
-                    opacity: 1,
-                  }}
-                  cursor={claimable && !claimed ? "pointer" : "not-allowed"}
-                  mx="20%"
+                  disabled={claimButtonDisabled}
+                  _disabled={{ opacity: 1 }}
+                  cursor={claimButtonDisabled ? "not-allowed" : "pointer"}
+                  mx={{ base: 0, lg: "20%" }}
                   mb={5}
-                  onClick={claimPrizes(claimablePrizeToken)}
+                  onClick={address ? claimPrizes(claimablePrizeToken) : login}
                 >
-                  {(claimable && claimed) ||
-                  claimingStatus === CLAIMING_STATUS.DONE
-                    ? "Received"
-                    : "Claim"}
+                  {getClaimButtonContent()}
                 </Button>
               </Flex>
-              <Text align="center" color="#7f7f7f">
-                {claimText}
-              </Text>
+              {address && (
+                <Text align="center" color="#7f7f7f">
+                  {claimHint}
+                </Text>
+              )}
             </>
           )}
         </Box>
