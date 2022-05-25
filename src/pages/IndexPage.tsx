@@ -1,26 +1,27 @@
-import { Flex, Box, Text, Img } from "@chakra-ui/react";
-import { Link } from "react-router-dom";
-import dayjs from "dayjs";
+import { Flex, Box, Text } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import * as fcl from "@onflow/fcl";
 import Header from "../components/Header";
 import IconLink from "../components/IconLink";
 import CampaignCard from "../components/CampaignCard";
 import ScrollableContainer from "../components/ScrollableContainer";
-import PrizesLabel from "../components/PrizesLabel";
-import Countdown from "../components/Countdown";
 import ScrollToTopButton from "../components/ScrollToTopButton";
-import bloctoLogo from "../assets/blocto.png";
+import TrendingSlide from "../components/TrendingSlide";
 import Visual from "../components/Visual";
 import { Campaign } from "../types";
 import getCampaignsScript from "../scripts/getCampaigns";
 
 const IndexPage = () => {
   const [campaigns, setCampaigns] = useState<Campaign[]>([]);
-  const trendingCampaigns = campaigns.filter(
-    (campaign) =>
-      campaign.startAt * 1000 <= Date.now() &&
-      Date.now() <= campaign.endAt * 1000
+  const trendingCampaigns = campaigns
+    .filter(
+      (campaign) =>
+        campaign.startAt * 1000 <= Date.now() &&
+        Date.now() <= campaign.endAt * 1000
+    )
+    .slice(0, 3);
+  const upcomingCampaigns = campaigns.filter(
+    (campaign) => Date.now() < campaign.startAt * 1000
   );
 
   useEffect(() => {
@@ -84,69 +85,8 @@ const IndexPage = () => {
           >
             Trending
           </Text>
-          {trendingCampaigns[0] && (
-            <Link to={`/campaigns/${trendingCampaigns[0].id}`}>
-              <Flex
-                direction={{ base: "column", md: "row" }}
-                justify="space-between"
-                boxShadow="0px 0px 20px rgba(0, 0, 0, 0.05)"
-                borderRadius="12px"
-                px={{ base: "12px", lg: "57px" }}
-                py={{ base: "15px", lg: "37px" }}
-                mb="50px"
-              >
-                <Box
-                  flex="1"
-                  mt={{ base: 0, lg: 20 }}
-                  pr={{ base: "0", lg: 20 }}
-                >
-                  <Flex align="center">
-                    <Box
-                      boxShadow="0px 0px 20px rgba(0, 0, 0, 0.05)"
-                      borderRadius="50%"
-                      width={45}
-                      height={45}
-                      p={1}
-                    >
-                      <Img
-                        src={trendingCampaigns[0].holderLogo || bloctoLogo}
-                      />
-                    </Box>
-                    <Text fontSize="xl" ml={4} color="#7f7f7f">
-                      {trendingCampaigns[0].holder || "Blocto"}
-                    </Text>
-                  </Flex>
-                  <Text
-                    fontSize={{ base: "3xl", lg: "4xl" }}
-                    fontWeight="bold"
-                    lineHeight={1}
-                    my={8}
-                  >
-                    {trendingCampaigns[0].title}
-                  </Text>
-                  <Text my={3}>{trendingCampaigns[0].description}</Text>
-                  <Box py={{ base: 1, lg: 3 }}>
-                    <PrizesLabel
-                      prizes={trendingCampaigns[0].prizes}
-                      active={true}
-                    />
-                  </Box>
-                  <Countdown
-                    endTime={dayjs(trendingCampaigns[0].endAt * 1000)}
-                    active={true}
-                    size="lg"
-                    my={5}
-                  />
-                </Box>
-                <Box flex="1">
-                  <Img
-                    src={trendingCampaigns[0].bannerUrl}
-                    borderRadius="12px"
-                    width="100%"
-                  />
-                </Box>
-              </Flex>
-            </Link>
+          {!!trendingCampaigns.length && (
+            <TrendingSlide campaigns={trendingCampaigns} />
           )}
 
           <ScrollableContainer pb={3}>
@@ -165,31 +105,34 @@ const IndexPage = () => {
               ))}
           </ScrollableContainer>
         </Box>
-        <Box mb={140}>
-          <Text
-            fontSize="2xl"
-            fontWeight="bold"
-            my={5}
-            align={{ base: "center", lg: "left" }}
-          >
-            Upcoming
-          </Text>
-          <ScrollableContainer pb={3}>
-            {campaigns
-              .filter((campaign) => Date.now() < campaign.startAt * 1000)
-              .map((campaign) => (
-                <Box
-                  key={campaign.id}
-                  p={{ base: 3, lg: 0 }}
-                  d="inline-block"
-                  mr={{ base: 4, lg: 5 }}
-                  width={["100%", "50%", "33%", "33%", "25%"]}
-                >
-                  <CampaignCard {...campaign} variant="upcoming" />
-                </Box>
-              ))}
-          </ScrollableContainer>
-        </Box>
+        {!!upcomingCampaigns.length && (
+          <Box mb={140}>
+            <Text
+              fontSize="2xl"
+              fontWeight="bold"
+              my={5}
+              align={{ base: "center", lg: "left" }}
+            >
+              Upcoming
+            </Text>
+            <ScrollableContainer pb={3}>
+              {campaigns
+                .filter((campaign) => Date.now() < campaign.startAt * 1000)
+                .map((campaign) => (
+                  <Box
+                    key={campaign.id}
+                    p={{ base: 3, lg: 0 }}
+                    d="inline-block"
+                    mr={{ base: 4, lg: 5 }}
+                    width={["100%", "50%", "33%", "33%", "25%"]}
+                  >
+                    <CampaignCard {...campaign} variant="upcoming" />
+                  </Box>
+                ))}
+            </ScrollableContainer>
+          </Box>
+        )}
+
         <Box>
           <Text
             fontSize="2xl"

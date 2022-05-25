@@ -1,10 +1,11 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
+import { ChakraProvider } from "@chakra-ui/react";
+import * as fcl from "@onflow/fcl";
+import "react-responsive-carousel/lib/styles/carousel.min.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
-import { ChakraProvider } from "@chakra-ui/react";
 import theme from "./theme";
-import * as fcl from "@onflow/fcl";
 
 const isMainnet = process.env.REACT_APP_NETWORK === "mainnet";
 const NODE_URL = isMainnet
