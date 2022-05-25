@@ -225,11 +225,30 @@ const CampaignPage = () => {
               height={30}
               p={1}
             >
-              <Img src={campaign.holderLogo || bloctoLogo} />
+              <Img src={bloctoLogo} />
             </Box>
-            <Text fontSize="xl" ml={4} color="#7f7f7f">
-              {campaign.holder || "Blocto"}
+            <Text fontSize="xl" ml={2} color="#7f7f7f">
+              Blocto
             </Text>
+            {campaign.holder && campaign.holderLogo && (
+              <>
+                <Text mx={2} color="#7f7f7f">
+                  X
+                </Text>
+                <Box
+                  boxShadow="0px 0px 20px rgba(0, 0, 0, 0.05)"
+                  borderRadius="50%"
+                  width={30}
+                  height={30}
+                  p={1}
+                >
+                  <Img src={campaign.holderLogo} />
+                </Box>
+                <Text fontSize="xl" ml={2} color="#7f7f7f">
+                  {campaign.holder}
+                </Text>
+              </>
+            )}
           </Flex>
           <Text
             fontSize={{ base: "3xl", lg: "4xl" }}
@@ -315,7 +334,12 @@ const CampaignPage = () => {
                 p={{ base: 4, lg: 0 }}
                 d="inline-block"
                 mr={{ base: 4, lg: 5 }}
-                width={["100%", "50%", "33%", "25%", "20%"]}
+                width={[
+                  "100%",
+                  "calc(50% - 12px)",
+                  "calc(33% - 12px)",
+                  "calc(25% - 16px)",
+                ]}
               >
                 <CampaignCard {...campaign} />
               </Box>

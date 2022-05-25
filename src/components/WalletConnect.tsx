@@ -45,7 +45,9 @@ const WalletConnectDesktop = ({
         <Flex>
           <Wallet fill="white" />
           <Text ml={2} color="white">
-            {address || "Connect Wallet"}
+            {address
+              ? `${address.slice(0, 4)}...${address.slice(-4)}`
+              : "Connect Wallet"}
           </Text>
         </Flex>
       </MenuButton>

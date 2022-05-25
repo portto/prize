@@ -98,7 +98,12 @@ const IndexPage = () => {
                   p={{ base: 3, lg: 0 }}
                   d="inline-block"
                   mr={{ base: 4, lg: 5 }}
-                  width={["100%", "50%", "33%", "25%", "20%"]}
+                  width={[
+                    "100%",
+                    "calc(50% - 12px)",
+                    "calc(33% - 12px)",
+                    "calc(25% - 20px)",
+                  ]}
                 >
                   <CampaignCard {...campaign} />
                 </Box>
@@ -116,19 +121,17 @@ const IndexPage = () => {
               Upcoming
             </Text>
             <ScrollableContainer pb={3}>
-              {campaigns
-                .filter((campaign) => Date.now() < campaign.startAt * 1000)
-                .map((campaign) => (
-                  <Box
-                    key={campaign.id}
-                    p={{ base: 3, lg: 0 }}
-                    d="inline-block"
-                    mr={{ base: 4, lg: 5 }}
-                    width={["100%", "50%", "33%", "33%", "25%"]}
-                  >
-                    <CampaignCard {...campaign} variant="upcoming" />
-                  </Box>
-                ))}
+              {upcomingCampaigns.map((campaign) => (
+                <Box
+                  key={campaign.id}
+                  p={{ base: 3, lg: 0 }}
+                  d="inline-block"
+                  mr={{ base: 4, lg: 5 }}
+                  width={["100%", "calc(50% - 12px)", "calc(33% - 12px)"]}
+                >
+                  <CampaignCard {...campaign} variant="upcoming" />
+                </Box>
+              ))}
             </ScrollableContainer>
           </Box>
         )}
@@ -150,8 +153,16 @@ const IndexPage = () => {
                   key={campaign.id}
                   p={{ base: 3, lg: 0 }}
                   d="inline-block"
-                  mr={{ base: 4, lg: 5 }}
-                  width={["100%", "50%", "33%", "25%", "20%"]}
+                  ml={{ base: 3, lg: 5 }}
+                  _first={{
+                    ml: 0,
+                  }}
+                  width={[
+                    "100%",
+                    "calc(50% - 12px)",
+                    "calc(33% - 12px)",
+                    "calc(25% - 16px)",
+                  ]}
                 >
                   <CampaignCard {...campaign} variant="ended" />
                 </Box>

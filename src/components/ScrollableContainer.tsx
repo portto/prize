@@ -57,6 +57,7 @@ const ScrollableContainer = ({
 
   return (
     <Box
+      role="group"
       ref={ref}
       __css={{
         msOverflowStyle: "none",

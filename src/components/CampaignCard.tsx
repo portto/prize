@@ -53,11 +53,30 @@ const CampaignCard = ({
                 height={25}
                 p={1}
               >
-                <Img src={holderLogo || bloctoLogo} />
+                <Img src={bloctoLogo} />
               </Box>
-              <Text ml={3} color="#7f7f7f">
-                {holder || "Blocto"}
+              <Text ml={1.5} color="#7f7f7f">
+                Blocto
               </Text>
+              {holder && holderLogo && (
+                <>
+                  <Text mx={1} color="#7f7f7f">
+                    X
+                  </Text>
+                  <Box
+                    boxShadow="0px 0px 20px rgba(0, 0, 0, 0.05)"
+                    borderRadius="50%"
+                    width={25}
+                    height={25}
+                    p={1}
+                  >
+                    <Img src={holderLogo} />
+                  </Box>
+                  <Text ml={1.5} color="#7f7f7f">
+                    {holder}
+                  </Text>
+                </>
+              )}
             </Flex>
             <Text fontWeight="bold" my={4} whiteSpace="normal" height="6ex">
               {title}

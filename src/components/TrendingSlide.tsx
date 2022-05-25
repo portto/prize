@@ -30,6 +30,8 @@ const Arrow = ({
     width="50px"
     height="50px"
     bg="white"
+    opacity={0}
+    _groupHover={{ opacity: 1 }}
     borderRadius="50%"
     boxShadow="0px 0px 20px rgba(0, 0, 0, 0.05)"
     transition="opacity .2s"
@@ -46,7 +48,7 @@ const TrendingSlide = ({ campaigns }: { campaigns: Campaign[] }) => {
   const [current, setCurrent] = useState(0);
 
   return (
-    <Box mb="50px" mx={-5}>
+    <Box mb="50px" mx={-5} role="group">
       <Carousel
         autoPlay
         showIndicators={false}
@@ -90,21 +92,43 @@ const TrendingSlide = ({ campaigns }: { campaigns: Campaign[] }) => {
                     height={45}
                     p={1}
                   >
-                    <Img src={campaign.holderLogo || bloctoLogo} />
+                    <Img src={bloctoLogo} />
                   </Box>
-                  <Text fontSize="xl" ml={4} color="#7f7f7f">
-                    {campaign.holder || "Blocto"}
+                  <Text fontSize="xl" ml={2} color="#7f7f7f">
+                    Blocto
                   </Text>
+                  {campaign.holder && campaign.holderLogo && (
+                    <>
+                      <Text mx={2} color="#7f7f7f">
+                        X
+                      </Text>
+                      <Box
+                        boxShadow="0px 0px 20px rgba(0, 0, 0, 0.05)"
+                        borderRadius="50%"
+                        width={25}
+                        height={25}
+                        p={1}
+                      >
+                        <Img src={campaign.holderLogo} />
+                      </Box>
+                      <Text ml={2} color="#7f7f7f">
+                        {campaign.holder}
+                      </Text>
+                    </>
+                  )}
                 </Flex>
                 <Text
                   fontSize={{ base: "3xl", lg: "4xl" }}
                   fontWeight="bold"
                   lineHeight={1}
+                  align="left"
                   my={8}
                 >
                   {campaign.title}
                 </Text>
-                <Text my={3}>{campaign.description}</Text>
+                <Text my={3} align="left">
+                  {campaign.description}
+                </Text>
                 <Box py={{ base: 1, lg: 3 }}>
                   <PrizesLabel prizes={campaign.prizes} active={true} />
                 </Box>

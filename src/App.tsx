@@ -9,7 +9,7 @@ import withContext from "./context";
 const App = () => (
   <Router>
     <Header />
-    <Box mt={Header.HEIGHT}>
+    <Box mt={Header.HEIGHT} maxW="1440px" mx="auto">
       <Routes>
         <Route path="/" element={<IndexPage />} />
         <Route path="/campaigns/:id" element={<CampaignPage />} />
