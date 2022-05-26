@@ -5,6 +5,7 @@ import Countdown from "./Countdown";
 import PrizesLabel from "./PrizesLabel";
 import Calendar from "./icons/Calendar";
 import bloctoLogo from "../assets/blocto.png";
+import preset from "../assets/preset.jpg";
 import { Campaign } from "../types";
 
 interface CampaignCardProps extends Campaign {
@@ -42,7 +43,7 @@ const CampaignCard = ({
   return (
     <Link to={`/campaigns/${id}`}>
       <Box boxShadow="0px 0px 20px rgba(0, 0, 0, 0.05)" borderRadius="12px">
-        <Img src={bannerUrl} width="100%" {...bannerStyles} />
+        <Img src={bannerUrl || preset} width="100%" {...bannerStyles} />
         {variant !== "upcoming" && (
           <Box p={5}>
             <Flex>

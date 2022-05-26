@@ -1,4 +1,4 @@
-import { Flex, Box, Text } from "@chakra-ui/react";
+import { Flex, Box, Text, Img } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import * as fcl from "@onflow/fcl";
 import Header from "../components/Header";
@@ -10,6 +10,7 @@ import TrendingSlide from "../components/TrendingSlide";
 import Visual from "../components/Visual";
 import { Campaign } from "../types";
 import getCampaignsScript from "../scripts/getCampaigns";
+import stayTuned from "../assets/stay-tuned.jpg";
 
 const IndexPage = () => {
   const [campaigns, setCampaigns] = useState<Campaign[]>([]);
@@ -132,6 +133,19 @@ const IndexPage = () => {
                   <CampaignCard {...campaign} variant="upcoming" />
                 </Box>
               ))}
+              {Array.from({ length: 3 - upcomingCampaigns.length }).map(
+                (_, index) => (
+                  <Box
+                    key={index}
+                    p={{ base: 3, lg: 0 }}
+                    d="inline-block"
+                    mr={{ base: 4, lg: 5 }}
+                    width={["100%", "calc(50% - 12px)", "calc(33% - 12px)"]}
+                  >
+                    <Img src={stayTuned} borderRadius="12px" />
+                  </Box>
+                )
+              )}
             </ScrollableContainer>
           </Box>
         )}
