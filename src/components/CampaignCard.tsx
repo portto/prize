@@ -51,10 +51,10 @@ const CampaignCard = ({
         }}
         transition="all .2s"
       >
-        <Img src={bannerUrl || preset} width="100%" {...bannerStyles} />
+        <Img src={bannerUrl || preset} {...bannerStyles} />
         {variant !== "upcoming" && (
           <Box p={5}>
-            <Flex>
+            <Flex align="center">
               <Box
                 boxShadow="0px 0px 20px rgba(0, 0, 0, 0.05)"
                 borderRadius="50%"
@@ -64,12 +64,12 @@ const CampaignCard = ({
               >
                 <Img src={bloctoLogo} />
               </Box>
-              <Text ml={1.5} color="#7f7f7f">
+              <Text ml={1.5} fontSize={14} color="#7f7f7f">
                 Blocto
               </Text>
               {partner && partnerLogo && (
                 <>
-                  <Text mx={1} color="#7f7f7f">
+                  <Text mx={1} fontSize={12} color="#7f7f7f">
                     X
                   </Text>
                   <Box
@@ -81,7 +81,7 @@ const CampaignCard = ({
                   >
                     <Img src={partnerLogo} />
                   </Box>
-                  <Text ml={1.5} color="#7f7f7f">
+                  <Text ml={1.5} fontSize={14} color="#7f7f7f">
                     {partner}
                   </Text>
                 </>

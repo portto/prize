@@ -72,8 +72,8 @@ const ScrollableContainer = ({
       {...rest}
     >
       <IconButton
-        marginLeft={-10}
         pos="sticky"
+        marginLeft={-10}
         width={10}
         height={10}
         bg="white"
@@ -83,13 +83,15 @@ const ScrollableContainer = ({
         opacity={showLeft ? 1 : 0}
         transition="all .2s"
         icon={<ChevronLeftIcon />}
-        aria-label="move left"
-        onClick={scroll("left")}
+        color="#7f7f7f"
+        boxShadow="0px 0px 20px rgb(0 0 0 / 5%)"
         _hover={{
           opacity: 0.8,
           bg: "white",
           transform: "scale(0.98)",
         }}
+        aria-label="move left"
+        onClick={scroll("left")}
       />
       {children}
       <IconButton
@@ -103,6 +105,8 @@ const ScrollableContainer = ({
         opacity={showRight ? 1 : 0}
         transition="all .2s"
         icon={<ChevronRightIcon />}
+        color="#7f7f7f"
+        boxShadow="0px 0px 20px rgb(0 0 0 / 5%)"
         aria-label="move right"
         onClick={scroll("right")}
         _hover={{

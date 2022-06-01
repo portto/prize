@@ -1,5 +1,6 @@
 import { Box, Flex, Text, Link } from "@chakra-ui/react";
 import IconLink from "./IconLink";
+import Instagram from "./icons/Instagram";
 
 const FooterLink = (props: any) => (
   <Link
@@ -19,7 +20,7 @@ const FooterLink = (props: any) => (
 );
 
 const Footer = () => (
-  <Box bg="#F9F9F9" p={5}>
+  <Box bg="#F9F9F9" py={5} px={7}>
     <Flex
       justify="space-between"
       direction={{ base: "column", lg: "row" }}
@@ -58,14 +59,19 @@ const Footer = () => (
           <Box className="fab fa-facebook-f" color="#7f7f7f" />
         </IconLink>
         <IconLink href="https://www.instagram.com/bloctoapp/" mx="10px">
-          <Box className="fab fa-instagram-square" color="#7f7f7f" />
+          <Instagram fill="#7f7f7f" boxSize="20px" d="inline" />
         </IconLink>
       </Flex>
     </Flex>
 
     <Box as="hr" my={6} />
 
-    <Text align="center" color="#7F7F7F">
+    <Text
+      fontSize={14}
+      align={{ base: "center", lg: "left" }}
+      color="#7F7F7F"
+      opacity=".65"
+    >
       © 2022 Blocto’s Campaign. All rights reserved.
     </Text>
   </Box>

@@ -15,6 +15,7 @@ import bloctoLogo from "../assets/blocto.svg";
 import React, { useState } from "react";
 import { Carousel } from "react-responsive-carousel";
 import { ChevronLeftIcon, ChevronRightIcon } from "@chakra-ui/icons";
+import preset from "../assets/preset.jpg";
 
 const Arrow = ({
   children,
@@ -84,8 +85,8 @@ const TrendingSlide = ({ campaigns }: { campaigns: Campaign[] }) => {
               boxShadow="0px 0px 20px rgba(0, 0, 0, 0.05)"
               borderRadius="12px"
               m={5}
-              px={{ base: "12px", lg: "57px" }}
-              py={{ base: "15px", lg: "37px" }}
+              px={{ base: "20px", lg: "57px" }}
+              py={{ base: "20px", lg: "37px" }}
               _hover={{
                 opacity: 0.8,
                 transform: "scale(0.98)",
@@ -103,12 +104,12 @@ const TrendingSlide = ({ campaigns }: { campaigns: Campaign[] }) => {
                   >
                     <Img src={bloctoLogo} />
                   </Box>
-                  <Text fontSize="xl" ml={2} color="#7f7f7f">
+                  <Text fontSize={14} ml={2} color="#7f7f7f">
                     Blocto
                   </Text>
                   {campaign.partner && campaign.partnerLogo && (
                     <>
-                      <Text mx={2} color="#7f7f7f">
+                      <Text fontSize={12} mx={2} color="#7f7f7f">
                         X
                       </Text>
                       <Box
@@ -120,7 +121,7 @@ const TrendingSlide = ({ campaigns }: { campaigns: Campaign[] }) => {
                       >
                         <Img src={campaign.partnerLogo} />
                       </Box>
-                      <Text ml={2} color="#7f7f7f">
+                      <Text fontSize={14} ml={2} color="#7f7f7f">
                         {campaign.partner}
                       </Text>
                     </>
@@ -150,7 +151,7 @@ const TrendingSlide = ({ campaigns }: { campaigns: Campaign[] }) => {
               </Box>
               <Box flex="1">
                 <Img
-                  src={campaign.bannerUrl}
+                  src={campaign.bannerUrl || preset}
                   borderRadius="12px"
                   width="100%"
                 />

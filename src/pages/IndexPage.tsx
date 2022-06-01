@@ -11,6 +11,7 @@ import Visual from "../components/Visual";
 import { Campaign } from "../types";
 import getCampaignsScript from "../scripts/getCampaigns";
 import stayTuned from "../assets/stay-tuned.jpg";
+import Instagram from "../components/icons/Instagram";
 
 const IndexPage = () => {
   const [campaigns, setCampaigns] = useState<Campaign[]>([]);
@@ -21,9 +22,9 @@ const IndexPage = () => {
         Date.now() <= campaign.endAt * 1000
     )
     .slice(0, 3);
-  const upcomingCampaigns = campaigns.filter(
-    (campaign) => Date.now() < campaign.startAt * 1000
-  );
+  const upcomingCampaigns = campaigns
+    .filter((campaign) => Date.now() < campaign.startAt * 1000)
+    .sort((a, b) => a.startAt - b.startAt);
 
   useEffect(() => {
     fcl
@@ -70,7 +71,7 @@ const IndexPage = () => {
               <Box className="fab fa-facebook-f" color="#7f7f7f" />
             </IconLink>
             <IconLink href="https://www.instagram.com/bloctoapp/" mx="10px">
-              <Box className="fab fa-instagram-square" color="#7f7f7f" />
+              <Instagram fill="#7f7f7f" boxSize="20px" d="inline" />
             </IconLink>
           </Flex>
         </Box>
@@ -111,44 +112,42 @@ const IndexPage = () => {
               ))}
           </ScrollableContainer>
         </Box>
-        {!!upcomingCampaigns.length && (
-          <Box mb={140}>
-            <Text
-              fontSize="4xl"
-              fontWeight="bold"
-              my={5}
-              align={{ base: "center", lg: "left" }}
-            >
-              Upcoming
-            </Text>
-            <ScrollableContainer pb={3}>
-              {upcomingCampaigns.map((campaign) => (
+        <Box mb={140}>
+          <Text
+            fontSize="4xl"
+            fontWeight="bold"
+            my={5}
+            align={{ base: "center", lg: "left" }}
+          >
+            Upcoming
+          </Text>
+          <ScrollableContainer pb={3}>
+            {upcomingCampaigns.map((campaign) => (
+              <Box
+                key={campaign.id}
+                p={{ base: 3, lg: 0 }}
+                d="inline-block"
+                mr={{ base: 4, lg: 5 }}
+                width={["100%", "calc(50% - 12px)", "calc(33% - 12px)"]}
+              >
+                <CampaignCard {...campaign} variant="upcoming" />
+              </Box>
+            ))}
+            {Array.from({ length: 3 - upcomingCampaigns.length }).map(
+              (_, index) => (
                 <Box
-                  key={campaign.id}
+                  key={index}
                   p={{ base: 3, lg: 0 }}
                   d="inline-block"
                   mr={{ base: 4, lg: 5 }}
                   width={["100%", "calc(50% - 12px)", "calc(33% - 12px)"]}
                 >
-                  <CampaignCard {...campaign} variant="upcoming" />
+                  <Img src={stayTuned} borderRadius="12px" />
                 </Box>
-              ))}
-              {Array.from({ length: 3 - upcomingCampaigns.length }).map(
-                (_, index) => (
-                  <Box
-                    key={index}
-                    p={{ base: 3, lg: 0 }}
-                    d="inline-block"
-                    mr={{ base: 4, lg: 5 }}
-                    width={["100%", "calc(50% - 12px)", "calc(33% - 12px)"]}
-                  >
-                    <Img src={stayTuned} borderRadius="12px" />
-                  </Box>
-                )
-              )}
-            </ScrollableContainer>
-          </Box>
-        )}
+              )
+            )}
+          </ScrollableContainer>
+        </Box>
 
         <Box>
           <Text
@@ -183,8 +182,8 @@ const IndexPage = () => {
               ))}
           </ScrollableContainer>
         </Box>
-        <ScrollToTopButton />
       </Box>
+      <ScrollToTopButton my={10} mx={20} />
     </Box>
   );
 };

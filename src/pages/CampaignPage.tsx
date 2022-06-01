@@ -9,7 +9,7 @@ import {
   useToast,
 } from "@chakra-ui/react";
 import { Navigate, useParams } from "react-router";
-import { useCallback, useContext, useEffect, useState } from "react";
+import { useCallback, useContext, useEffect, useMemo, useState } from "react";
 import dayjs from "dayjs";
 import timezone from "dayjs/plugin/timezone";
 import utc from "dayjs/plugin/utc";
@@ -20,10 +20,13 @@ import Countdown from "../components/Countdown";
 import ScrollableContainer from "../components/ScrollableContainer";
 import Prize from "../components/icons/Prize";
 import Trending from "../components/icons/Trending";
+import Upcoming from "../components/icons/Upcoming";
+import Ended from "../components/icons/Ended";
 import ScrollToTopButton from "../components/ScrollToTopButton";
 import AuthContext from "../context/auth";
 import { Campaign, Token } from "../types";
 import bloctoLogo from "../assets/blocto.svg";
+import preset from "../assets/preset.jpg";
 import getCampaignsScript from "../scripts/getCampaigns";
 import getCampaignScript from "../scripts/getCampaign";
 import claimPrizesScriptBuilder from "../scripts/builder/claimPrizes";
@@ -43,6 +46,12 @@ const CLAIMING_STATUS = {
   CLAIMING: 1,
   DONE: 2,
   ERROR: 3,
+};
+
+const CAMPAIGN_STSTUS = {
+  UPCOMING: 0,
+  TRENDING: 1,
+  ENDED: 2,
 };
 
 const CampaignPage = () => {
@@ -117,11 +126,19 @@ const CampaignPage = () => {
     [id, toast]
   );
 
+  const status = useMemo(() => {
+    if (!campaign) return -1;
+    const now = Date.now();
+    if (now <= campaign.startAt * 1000) return CAMPAIGN_STSTUS.UPCOMING;
+    if (now <= campaign.endAt * 1000) return CAMPAIGN_STSTUS.TRENDING;
+    if (now > campaign.endAt * 1000 || !campaign.startAt)
+      return CAMPAIGN_STSTUS.ENDED;
+  }, [campaign]);
+
   if (!campaign) return null;
   if (fetchingStatus === FETCHING_STATUS.DONE && !campaign)
     return <Navigate to="/" />;
 
-  const isTrending = !!campaign && Date.now() <= campaign.endAt * 1000;
   const startTime = campaign ? dayjs(campaign.startAt * 1000) : null;
   const endTime = campaign ? dayjs(campaign.endAt * 1000) : null;
 
@@ -165,16 +182,17 @@ const CampaignPage = () => {
       <Flex
         gap={10}
         px={{ base: 4, lg: 20, xl: "60px" }}
+        mb={100}
         direction={{ base: "column", lg: "row" }}
       >
         <Box flex={1} pr={{ base: 0, lg: 3 }}>
           <Img
-            src={campaign.bannerUrl}
+            src={campaign.bannerUrl || preset}
             borderRadius="12px"
             width="100%"
             mb={7}
           />
-          {isTrending && (
+          {status === CAMPAIGN_STSTUS.TRENDING && (
             <>
               <Flex direction="column">
                 {claimable && (
@@ -227,12 +245,12 @@ const CampaignPage = () => {
             >
               <Img src={bloctoLogo} />
             </Box>
-            <Text fontSize="xl" ml={2} color="#7f7f7f">
+            <Text fontSize={14} ml={2} color="#7f7f7f">
               Blocto
             </Text>
             {campaign.partner && campaign.partnerLogo && (
               <>
-                <Text mx={2} color="#7f7f7f">
+                <Text fontSize={12} mx={2} color="#7f7f7f">
                   X
                 </Text>
                 <Box
@@ -244,7 +262,7 @@ const CampaignPage = () => {
                 >
                   <Img src={campaign.partnerLogo} />
                 </Box>
-                <Text fontSize="xl" ml={2} color="#7f7f7f">
+                <Text fontSize={14} ml={2} color="#7f7f7f">
                   {campaign.partner}
                 </Text>
               </>
@@ -261,24 +279,37 @@ const CampaignPage = () => {
           <Box bg="#F9F9F9" borderRadius="12px" p={{ base: 4, lg: 25 }} mb={5}>
             <Flex justify="space-between" align="center" mb={4}>
               <Text fontWeight="bold">Campaign ends in</Text>
-              {isTrending && (
-                <Flex
-                  bg="white"
-                  align="center"
-                  px={5}
-                  py={1}
-                  borderRadius={100}
-                >
-                  <Trending fill="#0a94ff" />
-                  <Text color="primary.700" ml={1} fontWeight="semibold">
-                    Trending
-                  </Text>
-                </Flex>
-              )}
+              <Flex bg="white" align="center" px={5} py={1} borderRadius={100}>
+                {status === CAMPAIGN_STSTUS.UPCOMING && (
+                  <>
+                    <Upcoming fill="#0a94ff" />
+
+                    <Text color="primary.700" ml={1} fontWeight="semibold">
+                      Upcoming
+                    </Text>
+                  </>
+                )}
+                {status === CAMPAIGN_STSTUS.TRENDING && (
+                  <>
+                    <Trending fill="#0a94ff" />
+                    <Text color="primary.700" ml={1} fontWeight="semibold">
+                      Trending
+                    </Text>
+                  </>
+                )}
+                {status === CAMPAIGN_STSTUS.ENDED && (
+                  <>
+                    <Ended fill="#141414" />
+                    <Text color="#141414" ml={1} fontWeight="semibold">
+                      Ended
+                    </Text>
+                  </>
+                )}
+              </Flex>
             </Flex>
             <Countdown
               endTime={endTime}
-              active={isTrending}
+              active={status === CAMPAIGN_STSTUS.TRENDING}
               size="lg"
               bg="white"
             />
