@@ -81,7 +81,7 @@ pub contract BloctoToken: FungibleToken {
         // Function that takes a Vault object as an argument and adds
         // its balance to the balance of the owners Vault.
         // It is allowed to destroy the sent Vault because the Vault
-        // was a temporary holder of the tokens. The Vault's balance has
+        // was a temporary partner of the tokens. The Vault's balance has
         // been consumed and therefore can be destroyed.
         pub fun deposit(from: @FungibleToken.Vault) {
             let vault <- from as! @BloctoToken.Vault

@@ -27,8 +27,8 @@ const CampaignCard = ({
   id,
   title,
   bannerUrl,
-  holder,
-  holderLogo,
+  partner,
+  partnerLogo,
   prizes,
   variant = "regular",
   startAt,
@@ -67,7 +67,7 @@ const CampaignCard = ({
               <Text ml={1.5} color="#7f7f7f">
                 Blocto
               </Text>
-              {holder && holderLogo && (
+              {partner && partnerLogo && (
                 <>
                   <Text mx={1} color="#7f7f7f">
                     X
@@ -79,10 +79,10 @@ const CampaignCard = ({
                     height={25}
                     p={1}
                   >
-                    <Img src={holderLogo} />
+                    <Img src={partnerLogo} />
                   </Box>
                   <Text ml={1.5} color="#7f7f7f">
-                    {holder}
+                    {partner}
                   </Text>
                 </>
               )}

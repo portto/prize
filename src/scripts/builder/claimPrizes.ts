@@ -6,7 +6,7 @@ const makeScript = ({ vaultPath, receiverPath, balancePath, contractName, addres
   const tokenReceiverPath = pathToString(receiverPath)
   const tokenBalancePath = pathToString(balancePath)
   return `
-  import BloctoPrize from 0xb096b7a81df21336
+  import BloctoPrize from 0xc52330593c1d935f
   import ${contractName} from ${address}
   import FungibleToken from 0x9a0766d93b6608b7
       

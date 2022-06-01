@@ -1,6 +1,6 @@
 
 const script = `
-import BloctoPrize from 0xb096b7a81df21336
+import BloctoPrize from 0xc52330593c1d935f
 
 pub fun main(): [BloctoPrize.Campaign] {
   return BloctoPrize.getCampaigns()

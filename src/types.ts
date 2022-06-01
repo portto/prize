@@ -16,8 +16,8 @@ export interface Campaign {
   title: string
   description: string
   bannerUrl: string
-  holder: string
-  holderLogo: string
+  partner: string
+  partnerLogo: string
   prizes: Array<{
     name: string
     token: Token

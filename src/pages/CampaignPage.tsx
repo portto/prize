@@ -230,7 +230,7 @@ const CampaignPage = () => {
             <Text fontSize="xl" ml={2} color="#7f7f7f">
               Blocto
             </Text>
-            {campaign.holder && campaign.holderLogo && (
+            {campaign.partner && campaign.partnerLogo && (
               <>
                 <Text mx={2} color="#7f7f7f">
                   X
@@ -242,10 +242,10 @@ const CampaignPage = () => {
                   height={30}
                   p={1}
                 >
-                  <Img src={campaign.holderLogo} />
+                  <Img src={campaign.partnerLogo} />
                 </Box>
                 <Text fontSize="xl" ml={2} color="#7f7f7f">
-                  {campaign.holder}
+                  {campaign.partner}
                 </Text>
               </>
             )}

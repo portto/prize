@@ -1,5 +1,5 @@
 import { ChevronLeftIcon, ChevronRightIcon } from "@chakra-ui/icons";
-import { Box, ChakraProps, IconButton, useMediaQuery } from "@chakra-ui/react";
+import { Box, ChakraProps, IconButton } from "@chakra-ui/react";
 import { useCallback, useEffect, useRef, useState } from "react";
 
 interface ScrollableContainerProps extends ChakraProps {
