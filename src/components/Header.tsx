@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { Flex, Box, Text, Img } from "@chakra-ui/react";
 import WalletConnect from "./WalletConnect";
-import bloctoLogo from "../assets/blocto.png";
+import bloctoLogo from "../assets/blocto.svg";
 
 const HEADER_HEIGHT = 76;
 
@@ -12,17 +12,17 @@ const Header = () => (
       align="center"
       height={HEADER_HEIGHT}
       px={{ base: 3, lg: 7 }}
-      boxShadow="0px 0px 2px rgba(0, 0, 0, 0.1)"
+      bg="rgba(255,255,255,0.9)"
+      backdropFilter="blur(20px)"
       pos="fixed"
       top={0}
       left={0}
       right={0}
-      bg="white"
       zIndex={10}
     >
       <Link to="/">
         <Flex align="center">
-          <Img src={bloctoLogo} width={{ base: 30, lg: "100%" }} />
+          <Img src={bloctoLogo} width={{ base: "30px", lg: "40px" }} />
           <Text fontSize="2xl" fontWeight="bold" mx={2}>
             BLOCTO
           </Text>

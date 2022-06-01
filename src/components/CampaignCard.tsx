@@ -4,7 +4,7 @@ import dayjs from "dayjs";
 import Countdown from "./Countdown";
 import PrizesLabel from "./PrizesLabel";
 import Calendar from "./icons/Calendar";
-import bloctoLogo from "../assets/blocto.png";
+import bloctoLogo from "../assets/blocto.svg";
 import preset from "../assets/preset.jpg";
 import { Campaign } from "../types";
 
@@ -42,7 +42,15 @@ const CampaignCard = ({
   const endTime = dayjs(endAt * 1000);
   return (
     <Link to={`/campaigns/${id}`}>
-      <Box boxShadow="0px 0px 20px rgba(0, 0, 0, 0.05)" borderRadius="12px">
+      <Box
+        boxShadow="0px 0px 20px rgba(0, 0, 0, 0.05)"
+        borderRadius="12px"
+        _hover={{
+          opacity: 0.8,
+          transform: "scale(0.98)",
+        }}
+        transition="all .2s"
+      >
         <Img src={bannerUrl || preset} width="100%" {...bannerStyles} />
         {variant !== "upcoming" && (
           <Box p={5}>

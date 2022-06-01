@@ -11,10 +11,16 @@ const ScrollToTopButton = () => (
       aria-label="go to top button"
       borderRadius="50%"
       bg="white"
+      _hover={{
+        opacity: 0.8,
+        transform: "scale(0.98)",
+      }}
       _focus={{
+        transform: "scale(0.96)",
         focus: "none",
         outline: "none",
       }}
+      transition="all .2s"
       boxShadow="0px 0px 20px rgba(0, 0, 0, 0.05)"
     />
   </Flex>

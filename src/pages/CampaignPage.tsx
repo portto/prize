@@ -23,7 +23,7 @@ import Trending from "../components/icons/Trending";
 import ScrollToTopButton from "../components/ScrollToTopButton";
 import AuthContext from "../context/auth";
 import { Campaign, Token } from "../types";
-import bloctoLogo from "../assets/blocto.png";
+import bloctoLogo from "../assets/blocto.svg";
 import getCampaignsScript from "../scripts/getCampaigns";
 import getCampaignScript from "../scripts/getCampaign";
 import claimPrizesScriptBuilder from "../scripts/builder/claimPrizes";
@@ -196,8 +196,8 @@ const CampaignPage = () => {
                   bg={claimButtonDisabled ? "#7f7f7f" : "primary.700"}
                   borderRadius={100}
                   color="white"
-                  _hover={{ opacity: 0.8 }}
-                  _active={{ opacity: 0.9 }}
+                  _hover={{ opacity: 0.8, transform: "scale(0.98)" }}
+                  _active={{ opacity: 0.8, transform: "scale(0.96)" }}
                   disabled={claimButtonDisabled}
                   _disabled={{ opacity: 1 }}
                   cursor={claimButtonDisabled ? "not-allowed" : "pointer"}

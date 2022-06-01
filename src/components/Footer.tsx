@@ -2,7 +2,20 @@ import { Box, Flex, Text, Link } from "@chakra-ui/react";
 import IconLink from "./IconLink";
 
 const FooterLink = (props: any) => (
-  <Link d="block" target="_blank" rel="noopener noreferrer" mb={2} {...props} />
+  <Link
+    d="block"
+    target="_blank"
+    rel="noopener noreferrer"
+    mb={2}
+    _hover={{
+      textDecoration: "none",
+      opacity: 0.8,
+      transform: "scale(0.98)",
+    }}
+    _visited={{ opacity: 0.8, transform: "scale(0.96)" }}
+    transition="all .2s"
+    {...props}
+  />
 );
 
 const Footer = () => (

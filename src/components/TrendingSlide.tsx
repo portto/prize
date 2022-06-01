@@ -11,7 +11,7 @@ import { Link } from "react-router-dom";
 import { Campaign } from "../types";
 import Countdown from "./Countdown";
 import PrizesLabel from "./PrizesLabel";
-import bloctoLogo from "../assets/blocto.png";
+import bloctoLogo from "../assets/blocto.svg";
 import React, { useState } from "react";
 import { Carousel } from "react-responsive-carousel";
 import { ChevronLeftIcon, ChevronRightIcon } from "@chakra-ui/icons";
@@ -37,6 +37,10 @@ const Arrow = ({
     transition="opacity .2s"
     onClick={onClick}
     zIndex={1}
+    _hover={{
+      opacity: 0.8,
+      transform: "scale(0.98)",
+    }}
     {...rest}
   >
     {children}
@@ -82,6 +86,11 @@ const TrendingSlide = ({ campaigns }: { campaigns: Campaign[] }) => {
               m={5}
               px={{ base: "12px", lg: "57px" }}
               py={{ base: "15px", lg: "37px" }}
+              _hover={{
+                opacity: 0.8,
+                transform: "scale(0.98)",
+              }}
+              transition="all .2s"
             >
               <Box flex="1" mt={{ base: 0, lg: 20 }} pr={{ base: "0", lg: 20 }}>
                 <Flex align="center">

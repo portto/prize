@@ -34,7 +34,7 @@ const WalletConnectDesktop = ({
   copyAddress,
 }: WalletConnectProps) =>
   address ? (
-    <Menu>
+    <Menu offset={[0, 16]}>
       <MenuButton
         as={Button}
         bg="primary.700"
@@ -51,14 +51,27 @@ const WalletConnectDesktop = ({
           </Text>
         </Flex>
       </MenuButton>
-      <MenuList>
+      <MenuList border="none" boxShadow="rgb(0 0 0 / 5%) 0px 0px 20px">
         <MenuGroup title="Your Address" ml={3}>
-          <MenuItem color="#7f7f7f" onClick={copyAddress}>
+          <MenuItem
+            color="#7f7f7f"
+            onClick={copyAddress}
+            _hover={{ opacity: 0.8, transform: "scale(0.98)", bg: "inherit" }}
+            _focus={{ opacity: 0.8, transform: "scale(0.98)", bg: "inherit" }}
+            transition="all .2s"
+          >
             {address} <CopyIcon m={3} />
           </MenuItem>
         </MenuGroup>
         <MenuDivider />
-        <MenuItem onClick={logout}>Sign Out</MenuItem>
+        <MenuItem
+          onClick={logout}
+          _hover={{ opacity: 0.8, transform: "scale(0.98)", bg: "inherit" }}
+          _focus={{ opacity: 0.8, transform: "scale(0.98)", bg: "inherit" }}
+          transition="all .2s"
+        >
+          Sign Out
+        </MenuItem>
       </MenuList>
     </Menu>
   ) : (
@@ -85,10 +98,10 @@ const WalletConnectMobile = ({
         justify="space-between"
         align="center"
         height={address ? HEADER_HEIGHT * 1.5 : HEADER_HEIGHT}
-        bg="rgba(255, 255, 255, 0.8)"
-        px={3}
+        px={5}
         boxShadow="0px 0px 2px rgba(0, 0, 0, 0.1)"
-        backdropFilter="blur(4px)"
+        bg="rgba(255, 255, 255, 0.9)"
+        backdropFilter="blur(20px)"
         pos="fixed"
         top={HEADER_HEIGHT}
         left={0}

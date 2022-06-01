@@ -22,8 +22,8 @@ const Visual = (props: ChakraProps) => (
     justify="center"
     align="center"
     top={{ base: 30, lg: 0 }}
-    height={{ base: 350, md: 600, lg: 800 }}
-    width={{ base: 350, md: 600, lg: 800 }}
+    height={{ base: 350, md: 600, lg: 750 }}
+    width={{ base: 350, md: 600, lg: 750 }}
     mx="auto"
     zIndex={-1}
     {...props}

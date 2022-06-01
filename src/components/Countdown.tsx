@@ -53,19 +53,22 @@ const Countdown = ({
       justify="space-between"
       bg="#F9F9F9"
       borderRadius={size === "sm" ? 8 : 12}
-      p={size === "sm" ? 3 : 5}
+      py={size === "sm" ? 3 : 5}
+      px={0}
       {...rest}
     >
       <Box textAlign="center" flex={1}>
         <Text
           ref={dayRef}
           fontWeight="bold"
-          fontSize={size === "sm" ? "md" : "3xl"}
+          fontSize={size === "sm" ? "xl" : "3xl"}
           color={active ? "#0A94FF" : "#141414"}
         >
           --
         </Text>
-        <Text color="#7F7F7F">days</Text>
+        <Text color="#7F7F7F" fontSize="xs">
+          days
+        </Text>
       </Box>
       <Box
         width="1px"
@@ -77,12 +80,14 @@ const Countdown = ({
         <Text
           ref={hourRef}
           fontWeight="bold"
-          fontSize={size === "sm" ? "md" : "3xl"}
+          fontSize={size === "sm" ? "xl" : "3xl"}
           color={active ? "#0A94FF" : "#141414"}
         >
           --
         </Text>
-        <Text color="#7F7F7F">hours</Text>
+        <Text color="#7F7F7F" fontSize="xs">
+          hours
+        </Text>
       </Box>
       <Box
         width="1px"
@@ -94,12 +99,14 @@ const Countdown = ({
         <Text
           ref={minRef}
           fontWeight="bold"
-          fontSize={size === "sm" ? "md" : "3xl"}
+          fontSize={size === "sm" ? "xl" : "3xl"}
           color={active ? "#0A94FF" : "#141414"}
         >
           --
         </Text>
-        <Text color="#7F7F7F">mins</Text>
+        <Text color="#7F7F7F" fontSize="xs">
+          mins
+        </Text>
       </Box>
       <Box
         width="1px"
@@ -111,12 +118,14 @@ const Countdown = ({
         <Text
           ref={secondRef}
           fontWeight="bold"
-          fontSize={size === "sm" ? "md" : "3xl"}
+          fontSize={size === "sm" ? "xl" : "3xl"}
           color={active ? "#0A94FF" : "#141414"}
         >
           --
         </Text>
-        <Text color="#7F7F7F">secs</Text>
+        <Text color="#7F7F7F" fontSize="xs">
+          secs
+        </Text>
       </Box>
     </Flex>
   );

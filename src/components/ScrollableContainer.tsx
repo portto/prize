@@ -85,6 +85,11 @@ const ScrollableContainer = ({
         icon={<ChevronLeftIcon />}
         aria-label="move left"
         onClick={scroll("left")}
+        _hover={{
+          opacity: 0.8,
+          bg: "white",
+          transform: "scale(0.98)",
+        }}
       />
       {children}
       <IconButton
@@ -100,6 +105,11 @@ const ScrollableContainer = ({
         icon={<ChevronRightIcon />}
         aria-label="move right"
         onClick={scroll("right")}
+        _hover={{
+          opacity: 0.8,
+          bg: "white",
+          transform: "scale(0.98)",
+        }}
       />
     </Box>
   );

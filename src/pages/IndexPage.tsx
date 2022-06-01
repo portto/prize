@@ -43,7 +43,7 @@ const IndexPage = () => {
       >
         <Box flex={2} textAlign={{ base: "center", lg: "start" }}>
           <Text
-            fontSize={{ base: "5xl", lg: "6xl" }}
+            fontSize={{ base: "5xl", lg: "44px" }}
             fontWeight="bold"
             lineHeight={1}
             mb={8}
@@ -79,7 +79,7 @@ const IndexPage = () => {
       <Box px={{ base: "20px", lg: "104px" }} py={{ base: "40px", lg: "60px" }}>
         <Box mb={140}>
           <Text
-            fontSize="2xl"
+            fontSize="4xl"
             fontWeight="bold"
             my={5}
             align={{ base: "center", lg: "left" }}
@@ -114,7 +114,7 @@ const IndexPage = () => {
         {!!upcomingCampaigns.length && (
           <Box mb={140}>
             <Text
-              fontSize="2xl"
+              fontSize="4xl"
               fontWeight="bold"
               my={5}
               align={{ base: "center", lg: "left" }}
@@ -152,7 +152,7 @@ const IndexPage = () => {
 
         <Box>
           <Text
-            fontSize="2xl"
+            fontSize="4xl"
             fontWeight="bold"
             my={5}
             align={{ base: "center", lg: "left" }}
