@@ -1,4 +1,5 @@
 import { Token, Path } from "../../types"
+import getAddress from "../getAddress"
 
 const makeScript = ({ vaultPath, receiverPath, balancePath, contractName, address }: Token) => {
   const pathToString = (path: Path) => `/${path.domain}/${path.identifier}`
@@ -6,9 +7,9 @@ const makeScript = ({ vaultPath, receiverPath, balancePath, contractName, addres
   const tokenReceiverPath = pathToString(receiverPath)
   const tokenBalancePath = pathToString(balancePath)
   return `
-  import BloctoPrize from 0xc52330593c1d935f
+  import BloctoPrize from ${getAddress('BloctoPrize')}
   import ${contractName} from ${address}
-  import FungibleToken from 0x9a0766d93b6608b7
+  import FungibleToken from ${getAddress('FungibleToken')}
       
   transaction(id: Int) {
     prepare(signer: AuthAccount) {
