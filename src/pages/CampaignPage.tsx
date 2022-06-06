@@ -1,4 +1,5 @@
 import {
+  AspectRatio,
   Box,
   Button,
   Flex,
@@ -234,7 +235,7 @@ const CampaignPage = () => {
             </>
           )}
         </Box>
-        <Box flex={1}>
+        <Box flex={1} maxW="50%">
           <Flex align="center">
             <Box
               boxShadow="0px 0px 20px rgba(0, 0, 0, 0.05)"
@@ -253,14 +254,16 @@ const CampaignPage = () => {
                 <Text fontSize={12} mx={2} color="#7f7f7f">
                   X
                 </Text>
-                <Box
-                  boxShadow="0px 0px 20px rgba(0, 0, 0, 0.05)"
-                  borderRadius="50%"
-                  width={30}
-                  height={30}
-                  p={1}
-                >
-                  <Img src={campaign.partnerLogo} />
+                <Box p={1}>
+                  <AspectRatio
+                    ratio={1}
+                    boxShadow="0px 0px 20px rgba(0, 0, 0, 0.05)"
+                    borderRadius="50%"
+                    width={30}
+                    height={30}
+                  >
+                    <Img src={campaign.partnerLogo} borderRadius="50%" />
+                  </AspectRatio>
                 </Box>
                 <Text fontSize={14} ml={2} color="#7f7f7f">
                   {campaign.partner}
@@ -334,10 +337,17 @@ const CampaignPage = () => {
             <Box as="hr" my={4} />
             <Box>
               {campaign.prizes.map((prize, index) => (
-                <Flex key={index} my={2} align="center">
+                <Flex
+                  key={index}
+                  my={2}
+                  align="start"
+                  flexWrap="nowrap"
+                  wordBreak="break-word"
+                >
                   <Flex
                     width={25}
                     height={25}
+                    minW={25}
                     bg="white"
                     borderRadius="50%"
                     justify="center"
@@ -369,7 +379,7 @@ const CampaignPage = () => {
                   "100%",
                   "calc(50% - 12px)",
                   "calc(33% - 12px)",
-                  "calc(25% - 16px)",
+                  "calc(25% - 15px)",
                 ]}
               >
                 <CampaignCard {...campaign} />

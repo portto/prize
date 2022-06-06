@@ -6,7 +6,6 @@ const IconLink = (props: any) => (
     bg="#EFEFEF"
     width="36px"
     height="36px"
-    fontSize="20px"
     borderRadius="50%"
     lineHeight="36px"
     textAlign="center"

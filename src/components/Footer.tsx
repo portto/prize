@@ -59,7 +59,7 @@ const Footer = () => (
           <Box className="fab fa-facebook-f" color="#7f7f7f" />
         </IconLink>
         <IconLink href="https://www.instagram.com/bloctoapp/" mx="10px">
-          <Instagram fill="#7f7f7f" boxSize="20px" d="inline" />
+          <Instagram fill="#7f7f7f" boxSize="24px" d="inline" mb="2px" />
         </IconLink>
       </Flex>
     </Flex>

@@ -1,4 +1,4 @@
-import { Box, Flex, Img, Text } from "@chakra-ui/react";
+import { AspectRatio, Box, Flex, Img, Text } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 import dayjs from "dayjs";
 import Countdown from "./Countdown";
@@ -51,7 +51,9 @@ const CampaignCard = ({
         }}
         transition="all .2s"
       >
-        <Img src={bannerUrl || preset} {...bannerStyles} />
+        <AspectRatio ratio={1}>
+          <Img src={bannerUrl || preset} {...bannerStyles} />
+        </AspectRatio>
         {variant !== "upcoming" && (
           <Box p={5}>
             <Flex align="center">
@@ -72,15 +74,18 @@ const CampaignCard = ({
                   <Text mx={1} fontSize={12} color="#7f7f7f">
                     X
                   </Text>
-                  <Box
-                    boxShadow="0px 0px 20px rgba(0, 0, 0, 0.05)"
-                    borderRadius="50%"
-                    width={25}
-                    height={25}
-                    p={1}
-                  >
-                    <Img src={partnerLogo} />
+                  <Box p={1}>
+                    <AspectRatio
+                      ratio={1}
+                      boxShadow="0px 0px 20px rgba(0, 0, 0, 0.05)"
+                      borderRadius="50%"
+                      width={25}
+                      height={25}
+                    >
+                      <Img src={partnerLogo} borderRadius="50%" />
+                    </AspectRatio>
                   </Box>
+
                   <Text ml={1.5} fontSize={14} color="#7f7f7f">
                     {partner}
                   </Text>
@@ -90,7 +95,7 @@ const CampaignCard = ({
             <Text fontWeight="bold" my={4} whiteSpace="normal" height="6ex">
               {title}
             </Text>
-            <PrizesLabel prizes={prizes} active={variant === "regular"} />
+            <PrizesLabel prizes={prizes} active={variant === "regular"} />{" "}
             {variant === "regular" ? (
               <Countdown endTime={endTime} my={3} />
             ) : (

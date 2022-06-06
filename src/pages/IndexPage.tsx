@@ -71,7 +71,7 @@ const IndexPage = () => {
               <Box className="fab fa-facebook-f" color="#7f7f7f" />
             </IconLink>
             <IconLink href="https://www.instagram.com/bloctoapp/" mx="10px">
-              <Instagram fill="#7f7f7f" boxSize="20px" d="inline" />
+              <Instagram fill="#7f7f7f" boxSize="24px" d="inline" mb="2px" />
             </IconLink>
           </Flex>
         </Box>
@@ -104,7 +104,7 @@ const IndexPage = () => {
                     "100%",
                     "calc(50% - 12px)",
                     "calc(33% - 12px)",
-                    "calc(25% - 20px)",
+                    "calc(25% - 15px)",
                   ]}
                 >
                   <CampaignCard {...campaign} />
@@ -128,7 +128,7 @@ const IndexPage = () => {
                 p={{ base: 3, lg: 0 }}
                 d="inline-block"
                 mr={{ base: 4, lg: 5 }}
-                width={["100%", "calc(50% - 12px)", "calc(33% - 12px)"]}
+                width={["100%", "calc(50% - 12px)", "calc(33% - 9px)"]}
               >
                 <CampaignCard {...campaign} variant="upcoming" />
               </Box>
@@ -174,7 +174,7 @@ const IndexPage = () => {
                     "100%",
                     "calc(50% - 12px)",
                     "calc(33% - 12px)",
-                    "calc(25% - 16px)",
+                    "calc(25% - 15px)",
                   ]}
                 >
                   <CampaignCard {...campaign} variant="ended" />

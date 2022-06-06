@@ -1,4 +1,5 @@
 import {
+  AspectRatio,
   Box,
   ChakraProps,
   Flex,
@@ -93,13 +94,18 @@ const TrendingSlide = ({ campaigns }: { campaigns: Campaign[] }) => {
               }}
               transition="all .2s"
             >
-              <Box flex="1" mt={{ base: 0, lg: 20 }} pr={{ base: "0", lg: 20 }}>
+              <Box
+                flex="1"
+                mt={{ base: 0, lg: 20 }}
+                pr={{ base: "0", lg: 20 }}
+                maxW="50%"
+              >
                 <Flex align="center">
                   <Box
                     boxShadow="0px 0px 20px rgba(0, 0, 0, 0.05)"
                     borderRadius="50%"
-                    width={45}
-                    height={45}
+                    width={30}
+                    height={30}
                     p={1}
                   >
                     <Img src={bloctoLogo} />
@@ -112,14 +118,16 @@ const TrendingSlide = ({ campaigns }: { campaigns: Campaign[] }) => {
                       <Text fontSize={12} mx={2} color="#7f7f7f">
                         X
                       </Text>
-                      <Box
-                        boxShadow="0px 0px 20px rgba(0, 0, 0, 0.05)"
-                        borderRadius="50%"
-                        width={25}
-                        height={25}
-                        p={1}
-                      >
-                        <Img src={campaign.partnerLogo} />
+                      <Box p={1}>
+                        <AspectRatio
+                          ratio={1}
+                          boxShadow="0px 0px 20px rgba(0, 0, 0, 0.05)"
+                          borderRadius="50%"
+                          width={25}
+                          height={25}
+                        >
+                          <Img src={campaign.partnerLogo} borderRadius="50%" />
+                        </AspectRatio>
                       </Box>
                       <Text fontSize={14} ml={2} color="#7f7f7f">
                         {campaign.partner}

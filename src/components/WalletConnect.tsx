@@ -39,8 +39,9 @@ const WalletConnectDesktop = ({
         as={Button}
         bg="primary.700"
         borderRadius={100}
-        _hover={{ opacity: 0.8 }}
         _active={{ opacity: 0.9 }}
+        _hover={{ opacity: 0.8, transform: "scale(0.98)", bg: "primary.700" }}
+        transition="all .2s"
       >
         <Flex>
           <Wallet fill="white" />
@@ -52,30 +53,37 @@ const WalletConnectDesktop = ({
         </Flex>
       </MenuButton>
       <MenuList border="none" boxShadow="rgb(0 0 0 / 5%) 0px 0px 20px">
-        <MenuGroup title="Your Address" ml={3}>
+        <MenuGroup title="Your Address" fontSize="16px" ml={3} px={2}>
           <MenuItem
             color="#7f7f7f"
             onClick={copyAddress}
             _hover={{ opacity: 0.8, transform: "scale(0.98)", bg: "inherit" }}
             _focus={{ opacity: 0.8, transform: "scale(0.98)", bg: "inherit" }}
             transition="all .2s"
+            px={5}
           >
             {address} <CopyIcon m={3} />
           </MenuItem>
         </MenuGroup>
-        <MenuDivider />
+        <MenuDivider color="#efefef" />
         <MenuItem
           onClick={logout}
           _hover={{ opacity: 0.8, transform: "scale(0.98)", bg: "inherit" }}
           _focus={{ opacity: 0.8, transform: "scale(0.98)", bg: "inherit" }}
           transition="all .2s"
+          px={5}
         >
           Sign Out
         </MenuItem>
       </MenuList>
     </Menu>
   ) : (
-    <Button bg="primary.700" borderRadius={100} onClick={login}>
+    <Button
+      bg="primary.700"
+      borderRadius={100}
+      onClick={login}
+      _hover={{ opacity: 0.8, transform: "scale(0.98)", bg: "primary.700" }}
+    >
       <Wallet fill="white" />
       <Text ml={2} color="white">
         Connect Wallet
@@ -100,16 +108,25 @@ const WalletConnectMobile = ({
         height={address ? HEADER_HEIGHT * 1.5 : HEADER_HEIGHT}
         px={5}
         boxShadow="0px 0px 2px rgba(0, 0, 0, 0.1)"
-        bg="rgba(255, 255, 255, 0.9)"
-        backdropFilter="blur(20px)"
         pos="fixed"
-        top={HEADER_HEIGHT}
+        bg="transparent"
+        top={HEADER_HEIGHT - 1}
         left={0}
         right={0}
         transform={open ? "translateY(0)" : "translateY(-50%)"}
         opacity={open ? 1 : 0}
         pointerEvents={open ? "auto" : "none"}
         transition="transform .2s ease-out, opacity .2s ease-out"
+        _before={{
+          pos: "absolute",
+          left: 0,
+          width: "100%",
+          height: "100%",
+          content: '""',
+          bg: "rgba(255, 255, 255, 0.9)",
+          backdropFilter: "blur(20px)",
+          zIndex: -1,
+        }}
       >
         {address ? (
           <Flex direction="column" align="stretch" width="100%">

@@ -85,6 +85,7 @@ const ScrollableContainer = ({
         icon={<ChevronLeftIcon />}
         color="#7f7f7f"
         boxShadow="0px 0px 20px rgb(0 0 0 / 5%)"
+        zIndex={1}
         _hover={{
           opacity: 0.8,
           bg: "white",
@@ -99,7 +100,7 @@ const ScrollableContainer = ({
         width={10}
         height={10}
         bg="white"
-        right="0"
+        right="10px"
         bottom="45%"
         borderRadius="50%"
         opacity={showRight ? 1 : 0}
