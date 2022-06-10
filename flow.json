@@ -6,7 +6,12 @@
 		}
 	},
 	"contracts": {
-		"BloctoPrize": "./contracts/BloctoPrize.cdc",
+		"BloctoPrize": {
+			"source": "./contracts/BloctoPrize.cdc",
+			"aliases": {
+				"mainnet": "0xa9ea962dd3e75ee5"
+			}
+		},
 		"BloctoToken": {
 			"source": "./contracts/BloctoToken.cdc",
 			"aliases": {
@@ -33,10 +38,28 @@
 			"address": "f8d6e0586b0a20c7",
 			"key": "d815a1de3ad6b9d3cdaf5e6b30517468e0a8f3aadb7664743909cc04cdbe3cc2"
 		},
-		"testnet-account": {
+		"testnet-admin-account": {
 			"address": "c52330593c1d935f",
 			"key": "b906de707e1df16c1722da3875d38a6670d3640dad091faf7dde7ccc19cd60df"
-		}
+		},
+		"testnet-user-account": {
+			"address": "0x9527c6c9a6f2bf0f",
+			"keys": [
+				{
+					"type": "hex",
+					"index": 0,
+					"signatureAlgorithm": "ECDSA_secp256k1",
+					"hashAlgorithm": "SHA3_256",
+					"context": {
+						"privateKey": "adff1e3361fa6509ed77d82de63c485f7421c4e5e358aba143ad565ab13353ea"
+					}
+				}
+			],
+			"chain": "flow-testnet"
+		},
+		"campaign-admin-mainnet": {
+      "fromFile": "./flow.mainnet.json"
+    }
 	},
 	"deployments": {
 		"emulator": {
@@ -46,7 +69,7 @@
 			]
 		},
 		"testnet": {
-			"testnet-account": [
+			"testnet-admin-account": [
 				"BloctoPrize"
 			]
 		}
