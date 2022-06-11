@@ -21,9 +21,12 @@ const IndexPage = () => {
         campaign.startAt * 1000 <= Date.now() &&
         Date.now() <= campaign.endAt * 1000
     )
+    .filter((campaign) => !campaign.cancelled)
+
     .slice(0, 3);
   const upcomingCampaigns = campaigns
     .filter((campaign) => Date.now() < campaign.startAt * 1000)
+    .filter((campaign) => !campaign.cancelled)
     .sort((a, b) => a.startAt - b.startAt);
 
   useEffect(() => {
@@ -94,6 +97,7 @@ const IndexPage = () => {
           <ScrollableContainer pb={3}>
             {campaigns
               .filter((campaign) => Date.now() <= campaign.endAt * 1000)
+              .filter((campaign) => !campaign.cancelled)
               .map((campaign) => (
                 <Box
                   key={campaign.id}
@@ -161,6 +165,7 @@ const IndexPage = () => {
           <ScrollableContainer pb={3}>
             {campaigns
               .filter((campaign) => Date.now() > campaign.endAt * 1000)
+              .filter((campaign) => !campaign.cancelled)
               .map((campaign) => (
                 <Box
                   key={campaign.id}

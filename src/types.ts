@@ -18,6 +18,7 @@ export interface Campaign {
   bannerUrl: string
   partner: string
   partnerLogo: string
+  cancelled: boolean
   prizes: Array<{
     name: string
     token: Token

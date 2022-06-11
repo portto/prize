@@ -136,7 +136,7 @@ const CampaignPage = () => {
       return CAMPAIGN_STSTUS.ENDED;
   }, [campaign]);
 
-  if (!campaign) return null;
+  if (!campaign || campaign.cancelled) return null;
   if (fetchingStatus === FETCHING_STATUS.DONE && !campaign)
     return <Navigate to="/" />;
 
@@ -369,6 +369,7 @@ const CampaignPage = () => {
         <ScrollableContainer pb={3}>
           {campaigns
             .filter((campaign) => Date.now() <= campaign.endAt * 1000)
+            .filter((campaign) => !campaign.cancelled)
             .map((campaign) => (
               <Box
                 key={campaign.id}
