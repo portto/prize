@@ -8,13 +8,14 @@ transaction() {
     let adminRef = signer.borrow<&BloctoPrize.Admin>(from: BloctoPrize.AdminStoragePath)
       ?? panic("Can't borrow admin ref")
     let vault <- BloctoToken.createEmptyVault() as @FungibleToken.Vault
-    adminRef.createToken(
+    adminRef.addToken(
       tokenKey: "BLT",
       name: "BLT",
       contractName: "BloctoToken",
-      tokenStoragePath: BloctoToken.TokenStoragePath, 
-      tokenReceiverPath: BloctoToken.TokenPublicReceiverPath,
-      tokenBalancePath: BloctoToken.TokenPublicBalancePath,
+      vaultPath: BloctoToken.TokenStoragePath, 
+      receiverPath: BloctoToken.TokenPublicReceiverPath,
+      balancePath: BloctoToken.TokenPublicBalancePath,
+      address: 0x6e0797ac987005f5,
       vault: <- vault
     )
   }
