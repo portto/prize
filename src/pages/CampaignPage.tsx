@@ -35,6 +35,11 @@ import claimPrizesScriptBuilder from "../scripts/builder/claimPrizes";
 dayjs.extend(utc);
 dayjs.extend(timezone);
 
+const explorerUrl =
+  process.env.REACT_APP_NETWORK === "mainnet"
+    ? "https://flowscan.org/"
+    : "https://testnet.flowscan.org/";
+
 const FETCHING_STATUS = {
   IDLE: 0,
   FETCHING: 1,
@@ -101,9 +106,22 @@ const CampaignPage = () => {
             fcl.ref(block.id),
             fcl.limit(9999),
           ])
-          .then(({ transactionId }: { transactionId: string }) =>
-            fcl.tx(transactionId).onceSealed()
-          )
+          .then(({ transactionId }: { transactionId: string }) => {
+            toast({
+              title: (
+                <>
+                  Transaction sent!{" "}
+                  <a href={`${explorerUrl}/transaction/${transactionId}`}>
+                    check you tx status here
+                  </a>
+                </>
+              ),
+              status: "success",
+              isClosable: true,
+              duration: null,
+            });
+            return fcl.tx(transactionId).onceSealed();
+          })
           .then(() => {
             toast({
               title: "Claim successfully!",
