@@ -347,7 +347,10 @@ const CampaignPage = () => {
           <Box bg="#F9F9F9" borderRadius="12px" p={{ base: 4, lg: 25 }} mb={5}>
             <Text fontWeight="bold">Description</Text>
             <Box as="hr" my={4} />
-            {campaign.description}
+            <Text
+              whiteSpace="pre-line"
+              dangerouslySetInnerHTML={{ __html: campaign.description }}
+            />
           </Box>
 
           <Box bg="#F9F9F9" borderRadius="12px" p={{ base: 4, lg: 25 }} mb={5}>

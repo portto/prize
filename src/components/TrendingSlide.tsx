@@ -144,9 +144,12 @@ const TrendingSlide = ({ campaigns }: { campaigns: Campaign[] }) => {
                 >
                   {campaign.title}
                 </Text>
-                <Text my={3} align="left">
-                  {campaign.description}
-                </Text>
+                <Text
+                  my={3}
+                  align="left"
+                  whiteSpace="pre-line"
+                  dangerouslySetInnerHTML={{ __html: campaign.description }}
+                />
                 <Box py={{ base: 1, lg: 3 }}>
                   <PrizesLabel prizes={campaign.prizes} active={true} />
                 </Box>
