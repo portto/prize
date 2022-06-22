@@ -47,7 +47,7 @@ const IndexPage = () => {
       >
         <Box flex={2} textAlign={{ base: "center", lg: "start" }}>
           <Text
-            fontSize={{ base: "5xl", lg: "44px" }}
+            fontSize={{ base: "4xl", lg: "44px" }}
             fontWeight="bold"
             lineHeight={1}
             mb={8}

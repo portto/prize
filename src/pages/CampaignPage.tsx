@@ -253,7 +253,7 @@ const CampaignPage = () => {
             </>
           )}
         </Box>
-        <Box flex={1} maxW="50%">
+        <Box flex={1} maxW={{ base: "100%", md: "50%" }}>
           <Flex align="center">
             <Box
               boxShadow="0px 0px 20px rgba(0, 0, 0, 0.05)"

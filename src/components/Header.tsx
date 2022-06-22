@@ -29,12 +29,19 @@ const Header = () => (
     }}
   >
     <Link to="/">
-      <Flex align="center">
+      <Flex
+        align="center"
+        transition="all .2s"
+        _hover={{
+          opacity: 0.8,
+          transform: "scale(0.98)",
+        }}
+      >
         <Img src={bloctoLogo} width={{ base: "30px", lg: "40px" }} />
         <Text fontSize="2xl" fontWeight="bold" mx={2}>
           BLOCTO
         </Text>
-        <Box width="1px" height={30} bg="#BCBCBC" mx={3} />
+        <Box width="1px" height={25} bg="#D8D8D8" mx={3} />
         <Text>Campaign</Text>
       </Flex>
     </Link>

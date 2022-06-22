@@ -29,8 +29,8 @@ const Arrow = ({
     justify="center"
     align="center"
     top="50%"
-    width="50px"
-    height="50px"
+    width="40px"
+    height="40px"
     bg="white"
     opacity={0}
     _groupHover={{ opacity: 1 }}
@@ -66,14 +66,14 @@ const TrendingSlide = ({ campaigns }: { campaigns: Campaign[] }) => {
         renderArrowPrev={(onClick) =>
           isDesktop && (
             <Arrow left={1} onClick={onClick}>
-              <ChevronLeftIcon color="#7F7F7F" boxSize={8} />
+              <ChevronLeftIcon color="#7F7F7F" boxSize={7} />
             </Arrow>
           )
         }
         renderArrowNext={(onClick) =>
           isDesktop && (
             <Arrow right={0} onClick={onClick}>
-              <ChevronRightIcon color="#7F7F7F" boxSize={8} />
+              <ChevronRightIcon color="#7F7F7F" boxSize={7} />
             </Arrow>
           )
         }
@@ -98,7 +98,7 @@ const TrendingSlide = ({ campaigns }: { campaigns: Campaign[] }) => {
                 flex="1"
                 mt={{ base: 0, lg: 20 }}
                 pr={{ base: "0", lg: 20 }}
-                maxW="50%"
+                maxW={{ base: "100%", md: "50%" }}
               >
                 <Flex align="center">
                   <Box
