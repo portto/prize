@@ -148,6 +148,12 @@ const TrendingSlide = ({ campaigns }: { campaigns: Campaign[] }) => {
                   my={3}
                   align="left"
                   whiteSpace="pre-line"
+                  display="-webkit-inline-box"
+                  overflow="hidden"
+                  sx={{
+                    "-webkit-line-clamp": "3",
+                    "-webkit-box-orient": "vertical",
+                  }}
                   dangerouslySetInnerHTML={{ __html: campaign.description }}
                 />
                 <Box py={{ base: 1, lg: 3 }}>
