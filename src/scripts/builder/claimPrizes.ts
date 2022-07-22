@@ -22,7 +22,7 @@ const makeScript = ({ vaultPath, receiverPath, balancePath, contractName, addres
       }
 
       // check vault resource exist
-      if(signer.borrow<&FungibleToken.Vault>(from: ${tokenVaultPath}) == nil) {
+      if(signer.borrow<&${contractName}.Vault>(from: ${tokenVaultPath}) == nil) {
         signer.save(<- ${contractName}.createEmptyVault(), to: ${tokenVaultPath})
         signer.link<&${contractName}.Vault{FungibleToken.Receiver}>(
           ${tokenReceiverPath},
