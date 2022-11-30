@@ -190,7 +190,6 @@ const TrendingSlide = ({ campaigns }: { campaigns: Campaign[] }) => {
             borderRadius="50%"
             onClick={() => {
               setCurrent(index);
-              console.log(index);
             }}
           />
         ))}
