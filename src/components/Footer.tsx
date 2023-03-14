@@ -49,7 +49,7 @@ const Footer = () => (
         justify={{ base: "center", lg: "flex-end" }}
         mt={{ base: 12, lg: 0 }}
       >
-        <IconLink href="http://discord.gg/blocto" mx="10px">
+        <IconLink href="http://discord.gg/QRZTr6yHmY" mx="10px">
           <Box className="fab fa-discord" color="#7f7f7f" />
         </IconLink>
         <IconLink href="https://twitter.com/BloctoApp" mx="10px">
